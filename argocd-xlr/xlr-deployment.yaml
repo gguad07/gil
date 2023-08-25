@@ -17,7 +17,7 @@ spec:
       - image: xebialabs/xl-release:23.1.0
         name: xlr
         ports:
-        - containerPort: 8080
+        - containerPort: 5516
         env:
           - name: "ACCEPT_EULA"
             value: "Y"
