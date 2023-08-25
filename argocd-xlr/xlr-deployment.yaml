@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xlr
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: xlr
+  template:
+    metadata:
+      labels:
+        app: xlr
+    spec:
+      containers:
+      - image: xebialabs/xl-release:23.1.0
+        name: xlr
+        ports:
+        - containerPort: 8080
+  xlrLicense: 'LS0tIExpY2Vuc2UgLS0tCkxpY2Vuc2UgdmVyc2lvbjogMwpQcm9kdWN0OiBYTCBSZWxlYXNlCkxpY2Vuc2VkIHRvOiBYZWJpYUxhYnMKQ29udGFjdDogWGViaWFMYWJzIEludGVybmFsIFVzZSBPbmx5IDxpbmZvQHhlYmlhbGFicy5jb20+CkV4cGlyZXMgYWZ0ZXI6IDIwMzctMDEtMDEKU3VwcG9ydCBwb2xpY3k6IDh4NQpFZGl0aW9uOiBFbnRlcnByaXNlCi0tLSBTaWduYXR1cmUgKFNIQTF3aXRoRFNBKSAtLS0KMzAyZDAyMTQzN2ZkMjUwMjA5NTU1MDIzOTc2Mzk1NDVjZjZmYTQ5ZGE3NTE2NmMwMDIxNTAwOTEzZTlkZTc4YTk3MTE0OWU5OWVhOTk3YjYKNWE2ZGY1NDUzMTA5MDEKLS0tIEVuZCBvZiBTaWduYXR1cmUgLS0t'
