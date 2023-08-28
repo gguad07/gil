@@ -14,7 +14,7 @@ spec:
         app: xlr
     spec:
       containers:
-      - image: xebialabs/xl-release:23.1.0
+      - image: xebialabs/xl-release:23.1.6
         name: xlr
         ports:
         - containerPort: 5516
