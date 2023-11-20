@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<udm.DeploymentPackage version="1.0" application="File">
+<udm.DeploymentPackage version="1.0" application="Test-ISO">
   <application />
   <orchestrator />
   <deployables>
-    <file.File name="/File" file="/largefile/test-iso.zip">
+    <file.File name="/FileTest">
       <tags />
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>false</preScannedPlaceholders>
       <placeholders />
-      <checksum>4a4ac34078a90a80074edec874a96144b59fb70aa70cff11db6db39cc290db85</checksum>
+      <checksum>ba6592634d8a8d17ad6cf424e8c939a80e59515c5854b8e208c7df03461dada8</checksum>
       <fileEncodings>
         <entry key=".+\.properties">ISO-8859-1</entry>
       </fileEncodings>
+      <fileUri>https://github.com/gguad07/gil/blob/main/largefile/test-iso.zip</fileUri>
       <isRescanned>false</isRescanned>
-      <targetPath>/opt</targetPath>
+      <targetPath>/home/ubuntu</targetPath>
     </file.File>
   </deployables>
   <applicationDependencies />
