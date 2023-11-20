@@ -3,7 +3,7 @@
   <application />
   <orchestrator />
   <deployables>
-    <file.File name="/File" file="Test-iso.zip">
+    <file.File name="/File" file="/largefile/test-iso.zip">
       <tags />
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>false</preScannedPlaceholders>
