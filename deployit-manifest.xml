@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<udm.DeploymentPackage version="1.0" application="File">
+  <application />
+  <orchestrator />
+  <deployables>
+    <file.File name="/File" file="Test-iso.zip">
+      <tags />
+      <scanPlaceholders>true</scanPlaceholders>
+      <preScannedPlaceholders>false</preScannedPlaceholders>
+      <placeholders />
+      <checksum>4a4ac34078a90a80074edec874a96144b59fb70aa70cff11db6db39cc290db85</checksum>
+      <fileEncodings>
+        <entry key=".+\.properties">ISO-8859-1</entry>
+      </fileEncodings>
+      <isRescanned>false</isRescanned>
+      <targetPath>/opt</targetPath>
+    </file.File>
+  </deployables>
+  <applicationDependencies />
+  <dependencyResolution>LATEST</dependencyResolution>
+  <undeployDependencies>false</undeployDependencies>
+  <templates />
+  <boundTemplates />
+</udm.DeploymentPackage>
