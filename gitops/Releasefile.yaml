@@ -1,0 +1,12 @@
+# Exported from:        http://Gilbert-Guadana:5516/
+# Release version:      24.1.6
+# Date created:         Fri Aug 23 10:13:39 MDT 2024
+
+---
+apiVersion: xl-release/v1
+kind: Import
+spec:
+  imports:
+  - Notifications.yaml
+  - Template_Sample Release Template with Digital.ai Deploy.yaml
+  - Template_Sample Release Template.yaml
