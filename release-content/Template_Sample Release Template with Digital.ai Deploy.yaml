@@ -1,0 +1,153 @@
+# Exported from:        http://Gilbert-Guadana:5516/
+# Release version:      24.3.6
+# Date created:         Tue Apr 22 14:16:06 MDT 2025
+
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  path: /
+  home: Github
+spec:
+- template: Sample Release Template with Digital.ai Deploy
+  description: Major and minor release template.
+  scheduledStartDate: 2025-04-22T09:00:00-06:00
+  phases:
+  - phase: QA
+    tasks:
+    - name: Wait for dependencies
+      type: xlrelease.GateTask
+    - name: Version passes automated tests
+      type: xlrelease.GateTask
+      description: Select the proper version to test
+      conditions:
+      - name: Automated regression tests are green
+        type: xlrelease.GateCondition
+      - name: Release notes available
+        type: xlrelease.GateCondition
+    - name: Prepare QA environment
+      type: xlrelease.Task
+    - name: Deploy package to the QA environment
+      type: xldeploy.Deploy
+      deploymentPackage: "${packageId}"
+      deploymentEnvironment: "${QA environment}"
+      numberOfContinueRetrials: 0
+      pollingInterval: 10
+      numberOfPollingTrials: 0
+      displayStepLogs: true
+      connectionRetries: 10
+    - name: Testing
+      type: xlrelease.ParallelGroup
+      tasks:
+      - name: Update test scenarios
+        type: xlrelease.Task
+      - name: Regression tests
+        type: xlrelease.Task
+    - name: Sign off by QA
+      type: xlrelease.GateTask
+      conditions:
+      - name: Notify developers
+        type: xlrelease.GateCondition
+      - name: Notify Ops
+        type: xlrelease.GateCondition
+    - name: Notify stakeholders of successful QA
+      type: xlrelease.NotificationTask
+      addresses:
+      - vagrant@localhost
+      subject: "Application ${packageId} passed QA!"
+      body: "The application is available on the ${QA environment} environment."
+    color: "#498500"
+  - phase: UAT
+    tasks:
+    - name: Acceptance environment available
+      type: xlrelease.GateTask
+      conditions:
+      - name: Verify environment availability
+        type: xlrelease.GateCondition
+    - name: Prepare the ACC environment
+      type: xlrelease.Task
+    - name: Install test data on the ACC environment
+      type: xlrelease.Task
+    - name: "Deploy ${packageId} to ACC environment"
+      type: xldeploy.Deploy
+      deploymentPackage: "${packageId}"
+      deploymentEnvironment: "${ACC environment}"
+      numberOfContinueRetrials: 0
+      pollingInterval: 10
+      numberOfPollingTrials: 0
+      displayStepLogs: true
+      connectionRetries: 10
+    - name: "Notify QA of installation on ${ACC environment}"
+      type: xlrelease.NotificationTask
+      addresses:
+      - vagrant@localhost
+      subject: "Application ${packageId} is ready for acceptance testing on ${ACC\
+        \ environment}"
+      body: Have at it!
+    - name: Testing
+      type: xlrelease.ParallelGroup
+      tasks:
+      - name: Execute performance test
+        type: xlrelease.Task
+      - name: Execute UA test
+        type: xlrelease.Task
+    - name: Approve
+      type: xlrelease.GateTask
+      conditions:
+      - name: Collect all signatures
+        type: xlrelease.GateCondition
+    color: "#FF9E49"
+  - phase: Production
+    tasks:
+    - name: Go/no go meeting
+      type: xlrelease.Task
+    - name: Decide on upgrade slot
+      type: xlrelease.Task
+      description: Block all agendas
+    - name: Everybody available
+      type: xlrelease.GateTask
+      conditions:
+      - name: Invitations sent
+        type: xlrelease.GateCondition
+      - name: All participants accepted
+        type: xlrelease.GateCondition
+      - name: Set start time on Digital.ai Deploy task
+        type: xlrelease.GateCondition
+    - name: Run backups
+      type: xlrelease.Task
+    - name: "Deploy ${packageId} to PROD"
+      type: xldeploy.Deploy
+      deploymentPackage: "${packageId}"
+      deploymentEnvironment: Ops/Prod/PROD
+      numberOfContinueRetrials: 0
+      pollingInterval: 10
+      numberOfPollingTrials: 0
+      displayStepLogs: true
+      connectionRetries: 10
+    - name: Execute smoke tests
+      type: xlrelease.Task
+    - name: Notification
+      type: xlrelease.ParallelGroup
+      tasks:
+      - name: Alert marketing
+        type: xlrelease.Task
+      - name: "Application ${packageId} is live!"
+        type: xlrelease.NotificationTask
+        addresses:
+        - vagrant@localhost
+        subject: "Application ${packageId} is live!"
+    color: "#D61F21"
+  variables:
+  - type: xlrelease.StringVariable
+    key: ACC environment
+    label: Environment
+    description: Environment to deploy to. Auto-complete is supported in this field.
+  - type: xlrelease.StringVariable
+    key: QA environment
+    label: Body
+    description: "Message body, in Markdown format."
+  - type: xlrelease.StringVariable
+    key: packageId
+    label: Title
+    description: The title of the item.
+  riskProfile: Default risk profile
