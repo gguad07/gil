@@ -17,11 +17,11 @@ jobs:
           java-version: '17'
 
       - name: Grant execute permissions to gradlew
-        run: chmod +x ./gradlew
+        run: chmod +x gradlew
 
       - name: Build with Gradle
         id: build
-        run: ./gradlew build --no-daemon --console=plain
+        run: gradlew build --no-daemon --console=plain
 
       - name: Create Publish and Deploy Package
         id: deploy
